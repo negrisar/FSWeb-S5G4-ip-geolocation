@@ -1,12 +1,13 @@
 //axios import buraya gelecek
+import axios from 'axios';
 
 var benimIP;
 
 
 // ------------ değiştirmeyin --------------
 // licensed to Ergineer 2022
-require("babel-core/register");
-require("babel-polyfill");
+//require("babel-core/register");
+//require("babel-polyfill");
 async function ipAdresimiAl(){
 	await axios({
 		method: 'get',
@@ -30,6 +31,7 @@ async function ipAdresimiAl(){
 	NOT: Bilgisayarın IP adresini öğrenmek için: https://apis.ergineer.com/ipadresim 
 	ADIM 5'e gelene kadar fonksiyonunuzu test etmek için ip nizi URL'ye manuel olarak ekleyebilirsiniz.
 */
+
 
 /*
 	ADIM 2: Geri döndürülen verileri inceleyin, bu sizin ip bilgileriniz! Bileşen fonksiyonunuzu geliştirmek içindeki bu veri yapısını
@@ -70,3 +72,41 @@ async function ipAdresimiAl(){
 
 
 //kodlar buraya gelecek
+
+const kartOlustur = (data) =>{
+const containerDiv = document.createElement("div");
+	containerDiv.classList.add("card");
+const img = document.createElement("img");
+	img.src = data.ülkebayrağı;
+const containerDiv2 = document.createElement("div");
+	containerDiv2.classList.add("card-info");
+const h3=document.createElement("h3");
+	h3.classList.add("ip");
+	h3.textContent=data.sorgu;
+const p=document.createElement("p");
+	p.classList.add("ülke");
+	p.textContent=`${data.ülke} (${data.ülkeKodu})`;
+const p2=document.createElement("p");
+	p2.textContent=`Enlem: ${data.enlem} Boylam: ${data.boylam}`;
+const p3=document.createElement("p");
+	p3.textContent=`Şehir: ${data.şehir}`;
+const p4=document.createElement("p");
+	p4.textContent=`Saat Dilimi: ${data.saatdilimi}`;
+const p5=document.createElement("p");
+	p5.textContent=`Para Birimi: ${data.parabirimi}`;
+const p6=document.createElement("p");
+	p6.textContent=`ISP: ${data.isp}`;
+containerDiv2.append(h3,p,p2,p3,p4,p5,p6);
+containerDiv.append(img,containerDiv2);
+
+return containerDiv;
+	
+}
+async function getData(){
+	await ipAdresimiAl();
+
+	axios.get("https://apis.ergineer.com/ipgeoapi/"+benimIP).then((response)=>{
+	document.querySelector(".cards").append(kartOlustur(response.data)) });
+}
+
+getData()
